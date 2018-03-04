@@ -9,8 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Entity
-@Table(name = "customer")
+@javax.persistence.Entity(name = "customer")
 public class Customer implements Serializable {
 
 	private static final long serialVersionUID = -3009157732242241606L;

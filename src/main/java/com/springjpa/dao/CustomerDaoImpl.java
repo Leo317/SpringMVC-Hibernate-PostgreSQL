@@ -40,34 +40,59 @@ public class CustomerDaoImpl implements ICustomerDao {
 
 	@Override
 	public void update(Customer customer) {
-		System.out.println(customer);
+//		System.out.println(customer);
+		boolean hasParam = false, hasFirstParam = false;
+		if (customer.getPhone() != 0 || customer.getFirstName() != null || customer.getLastName() != null) 
+			hasParam = true;
+		
+		if (hasParam) {
+			
+			Session session = sessionFactory.openSession();
+			session.beginTransaction();
 
-		Session session = sessionFactory.openSession();
-//		session.beginTransaction();
-//		session.update(customer);
-//		session.getTransaction().commit();
-//		session.close();
-		session.beginTransaction();
+			String HQL = "update customer set ";
+			if (customer.getPhone() != 0) {
+				HQL += "phone=:phone ";
+				hasFirstParam = true;
+			}
+			if (customer.getFirstName() != null && hasFirstParam)
+				HQL += ",firstname=:firstname ";
+			else if (customer.getFirstName() != null) {
+				HQL += "firstname=:firstname ";
+				hasFirstParam = true;
+			}
+			if (customer.getLastName() != null && hasFirstParam)
+				HQL += ",lastname=:lastname ";
+			else if (customer.getLastName() != null) {
+				HQL += "lastname=:lastname ";
+				hasFirstParam = true;
+			}
+			
+			HQL += "where id=:id";
+			System.out.println(HQL);
+			Query query = session.createQuery(HQL);
+			if (customer.getPhone() != 0)
+				query.setParameter("phone", customer.getPhone());
+			if (customer.getFirstName() != null)
+				query.setParameter("firstname", customer.getFirstName());
+			if (customer.getLastName() != null)
+				query.setParameter("lastname", customer.getLastName());
+			query.setParameter("id", customer.getId());
+			
+			try {
+				int executeUpdate = query.executeUpdate();
+				if (executeUpdate > 0)
+					System.out.println("Update Successfully!!!");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			session.getTransaction().commit();
+			session.close();
 		
-		String HQL = "update customer set phone=:phone,"
-				+ " fistName=:firstName, lastName=:lastName where id = :id";
-		Query query = session.createQuery(HQL);
-		query.setParameter("phone", customer.getPhone());
-		query.setParameter("firstName", customer.getFirstName());
-		query.setParameter("lastName", customer.getLastName());
-		query.setParameter("id", customer.getId());
-		try {
-			int executeUpdate = query.executeUpdate();
-			if (executeUpdate > 0)
-				System.out.println("Update Successfully!!!");
-		} catch (Exception e) {
-			e.printStackTrace();
+		} else {
+			System.out.println("No Parameter Update!!!");
 		}
-		
-		session.getTransaction().commit();
-		session.close();
-		
-		  
 //		Customer result = new Customer();
 //		result.setId(id);
 //		result.setPhone(customer.getPhone());
