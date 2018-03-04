@@ -69,4 +69,9 @@ public class Customer implements Serializable {
 		// TODO Auto-generated method stub
 		this.id = id;
 	}
+
+	public long getId() {
+		// TODO Auto-generated method stub
+		return id;
+	}
 }

@@ -9,72 +9,46 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.springjpa.dao.CustomerDaoImpl;
 import com.springjpa.model.Customer;
 
-@Service
+@Service("customerService")
 public class CustomerServiceImpl implements ICustomerService {
 	@Autowired
-    SessionFactory sessionFactory;
-	
-	public void add(Customer customer) {
-		Customer temp = new Customer();
-		temp.setPhone(customer.getPhone());
-		temp.setFirstName(customer.getFirstName());
-		temp.setLastName(customer.getLastName());
-		
-		Session session = sessionFactory.openSession();
-        session.beginTransaction();
-     
-        session.save(temp);
-     
-        session.getTransaction().commit();
-        session.close();
+	private CustomerDaoImpl customerDao;
+
+	@Override
+	public void creat(Customer customer) {
+		customerDao.creat(customer);
 	}
-	
+
+	@Override
+	public void update(Customer customer) {
+		customerDao.update(customer);
+	}
+
+	@Override
+	public Customer edit(long id) {
+		// TODO Auto-generated method stub
+		return customerDao.edit(id);
+	}
+
+	@Override
 	public void delete(long id) {
-		Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        
-        Customer result = new Customer();
-        result = (Customer)session.load(Customer.class,id);
-        session.delete(result);
-        
-        session.getTransaction().commit();
-        session.close();
+		// TODO Auto-generated method stub
+		customerDao.delete(id);
+	}
+
+	@Override
+	public Customer find(long id) {
+		// TODO Auto-generated method stub
+		return customerDao.find(id);
+	}
+
+	@Override
+	public String getAll() {
+		// TODO Auto-generated method stub
+		return customerDao.getAll();
 	}
 	
-	public void update(long id, Customer customer) {
-		System.out.println(id);
-
-		Customer result = new Customer();
-		result.setId(id);
-		result.setPhone(customer.getPhone());
-		result.setFirstName(customer.getFirstName());
-		result.setLastName(customer.getLastName());
-		
-		System.out.println(result);
-		Session session = sessionFactory.openSession();
-        session.beginTransaction();
-     
-        session.update(result);
-     
-        session.getTransaction().commit();
-        session.close();
-	}
-	
-	public String findAll() {
-		Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        
-		Criteria criteria = session.createCriteria(Customer.class);
-        List users = criteria.list();
-        Iterator iterator =  users.iterator();
-
-        String result = "";
-        
-        while(iterator.hasNext()) {
-        	result += iterator.next().toString() + "<br>";
-        }
-		return result;
-	}
 }

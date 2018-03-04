@@ -1,5 +1,7 @@
 package com.springjpa.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,18 +33,18 @@ public class WebController {
 		return "Done";
 	}
 	
-	@PostMapping(value = "/add")
-	public ResponseEntity add(@RequestBody Customer customer){
+	@PostMapping(value = "/creat")
+	public ResponseEntity creat(@RequestBody Customer customer){
 		
-		iCustomerServ.add(customer);
+		iCustomerServ.creat(customer);
         
 		return new ResponseEntity(customer, HttpStatus.OK);
 	}
 	
 	@PutMapping("/customers/{id}")
 	public ResponseEntity update(@PathVariable Long id, @RequestBody Customer customer) {
-		
-		iCustomerServ.update(id, customer);
+		customer.setId(id);
+		iCustomerServ.update(customer);
 		
 		return new ResponseEntity(customer, HttpStatus.OK);
 	}
@@ -56,7 +58,7 @@ public class WebController {
 	}
 
 	@RequestMapping("/findall")
-	public String findAll(){
+	public String getAll(){
 //		String result = "";
 //		
 //		for(Customer cust : repository.findAll()){
@@ -64,7 +66,7 @@ public class WebController {
 //		}
 //		
 //		return result;
-		return iCustomerServ.findAll();
+		return iCustomerServ.getAll();
 	}
 	
 //	@RequestMapping("/findbyid")
