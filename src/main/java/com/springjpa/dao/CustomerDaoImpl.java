@@ -50,7 +50,7 @@ public class CustomerDaoImpl implements ICustomerDao {
 			Session session = sessionFactory.openSession();
 			session.beginTransaction();
 
-			String HQL = "update customer set ";
+			String HQL = "update Customer set ";
 			if (customer.getPhone() != 0) {
 				HQL += "phone=:phone ";
 				hasFirstParam = true;
