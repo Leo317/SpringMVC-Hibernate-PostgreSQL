@@ -36,7 +36,7 @@ public class WebController {
 	@PostMapping(value = "/creat")
 	public ResponseEntity creat(@RequestBody Customer customer){
 		
-//		iCustomerServ.creat(customer);
+		iCustomerServ.creat(customer);
         
 		return new ResponseEntity(customer, HttpStatus.OK);
 	}
