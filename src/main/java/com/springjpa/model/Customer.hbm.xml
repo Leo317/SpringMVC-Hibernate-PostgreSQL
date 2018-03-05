@@ -9,6 +9,11 @@
             <column name="id" />
             <generator class="identity" />
         </id>
-        
+        <property name="phone" type="java.lang.Long">
+            <column name="phone" length="10" not-null="true" unique="true" />
+        </property>
+        <property name="firstName" column="firstname"/> 
+
+        <property name="lastName" column="lastname"/>
     </class> 
 </hibernate-mapping>
