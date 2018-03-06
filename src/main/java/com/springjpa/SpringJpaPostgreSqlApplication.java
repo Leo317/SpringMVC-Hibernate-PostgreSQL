@@ -17,13 +17,13 @@ public class SpringJpaPostgreSqlApplication implements CommandLineRunner{
 
 	
 	public static void main(String[] args){
-		ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().configure().build();  
-		  
-		MetadataImplementor metadataImplementor = (MetadataImplementor)  
-		new MetadataSources(serviceRegistry).buildMetadata();  
-		  
-		SchemaExport export = new SchemaExport(serviceRegistry, metadataImplementor);  
-		export.create(true, true);  
+//		ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().configure().build();  
+//		  
+//		MetadataImplementor metadataImplementor = (MetadataImplementor)  
+//		new MetadataSources(serviceRegistry).buildMetadata();  
+//		  
+//		SchemaExport export = new SchemaExport(serviceRegistry, metadataImplementor);  
+//		export.create(true, true);
 		
 		SpringApplication.run(SpringJpaPostgreSqlApplication.class, args);
 
